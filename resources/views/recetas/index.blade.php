@@ -19,6 +19,13 @@
                     <td>Comida</td>
                     <td></td>
                 </tr>
+                    @foreach ($recetas as $id=>$receta)
+                    <tr>
+                    <td>{{$receta}}</td>
+                    <td>{{$id}}</td>
+                    <td></td> 
+                    </tr>
+                    @endforeach
             </tbody>
         </table>
     </div>
