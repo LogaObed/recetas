@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\CategoriaReceta;
 use App\Receta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Laravel\Ui\Presets\React;
 
 class RecetaController extends Controller
 {
@@ -22,8 +24,11 @@ class RecetaController extends Controller
      */
     public function index()
     {
-        $recetas= DB::table('recetas')->get()->pluck('titulo','ingredientes');
-       return view('recetas.index')->with('recetas',$recetas);
+        
+        // Se peudde utilizar la configuracion auth()-> 0 Auth::;
+        // Auth::user()->recetas->dd();
+        $recetas=auth()->user()->recetas;
+        return view('recetas.index')->with('recetas',$recetas);
     }
 
     /**
@@ -33,9 +38,11 @@ class RecetaController extends Controller
      */
     public function create()
     {
-        // Se Ocupa el motodo get para seleccionar, pluck para solicitar los campos especificos y add solo imprime el areglo
-        // DB::table('categoria_receta')->get()->pluck('nombre','id')->dd();
-        $categorias = DB::table('categoria_receta')->get()->pluck('nombre','id');
+    //     Se Ocupa el motodo get para seleccionar, pluck para solicitar los campos especificos y add solo imprime el areglo
+    //    DB::table('categoria_recetas')->get()->pluck('nombre','id')->dd();
+    //     $categorias = DB::table('categoria_recetas')->get()->pluck('nombre','id');
+        // // obtener categoria con modelo
+        $categorias = CategoriaReceta::all(['id','nombre']);
         // with ayuda a compartir los datos como variable
         return view('recetas.create')->with('categorias',$categorias);
     }
@@ -63,14 +70,14 @@ class RecetaController extends Controller
         // redimencionar la imagen se debe instalar intervention image
         $img = Image::make(public_path("storage/{$ruta_img}"))->fit(1000,550);
         $img->save();
-        DB::table('recetas')->insert([
-            'titulo'=>$data['titulo'],
-            // obtner id de la sesion
-            'user_id'=>Auth::user()->id,
-            'categoria_id'=>$data['categoria'],
-            'imagen'=>$ruta_img,
-            'ingredientes'=>$data['ingredientes'],
-            'preparacion'=>$data['preparacion'],
+        // insertar a la base de datos con modelo
+        // auth()->user()-> recetas() ya obtiene los datos de la base de datos como el id de usuario 
+        auth()->user()->recetas()->create([
+                'titulo'=>$data['titulo'],
+                'categoria_id'=>$data['categoria'],
+                'imagen'=>$ruta_img,
+                'ingredientes'=>$data['ingredientes'],
+                'preparacion'=>$data['preparacion'],
         ]);
         return redirect()->action('RecetaController@index');
         // dd($request->all());
@@ -84,7 +91,8 @@ class RecetaController extends Controller
      */
     public function show(Receta $receta)
     {
-        //
+        //muestra los datos de una consulta por get forma abreviada de pasar datos 
+      return view('recetas.show',compact('receta'));
     }
 
     /**

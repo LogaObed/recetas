@@ -1,0 +1,34 @@
+@extends('layouts.app')
+@section('content')
+    <article class="contenido-receta">
+        <h1 class="text-center mb-4">{{$receta->titulo}}</h1>
+        <div class="imagen-receta">
+            <img src="/storage/{{$receta->imagen}}" class="w-100" alt="">
+        </div>
+        <div class="receta-meta">
+            <p>
+                <span class="font-weight-bold text-primary">Escrito En:</span>
+                {{$receta->categoria->nombre}}
+            </p>
+            <p>
+                <span class="font-weight-bold text-primary">Autor:</span>
+                {{$receta->autor}}
+            </p>
+            <p>
+                <span class="font-weight-bold text-primary">Fecha De Creción:</span>
+                {{-- usando moment --}}
+                <fecha-receta hola="{{$receta->created_at}}"></fecha-receta>
+            </p>
+        </div>
+        <div  class="ingredientes">
+        <h2 class="my-3 text-primary">Ingredientes:</h2>
+        {{-- imprimir los ingredientes con codigo html --}}
+        
+        {!!$receta->ingredientes!!}
+    </div>
+    <div class="preparacion">
+        <h2 class="my-3 text-primary">Preparación:</h2>
+        {!!$receta->preparacion!!}
+        </div>
+    </article>
+@endsection

@@ -14,16 +14,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Pizza</td>
-                    <td>Comida</td>
-                    <td></td>
-                </tr>
                     @foreach ($recetas as $id=>$receta)
                     <tr>
-                    <td>{{$receta}}</td>
-                    <td>{{$id}}</td>
-                    <td></td> 
+                    <td>{{$receta->titulo}}</td>
+                    {{-- concatenacion de péticiones por medio del modelo relacional modelo --}}
+                    <td>{{$receta->categoria->nombre}}</td>
+                    <td>
+                        <a href="" class="btn btn-danger">Eliminar</a>
+                        <a href="" class="btn btn-dark">Editar</a>
+                        <a href="" class="btn btn-success">Ver</a>
+                    </td>
                     </tr>
                     @endforeach
             </tbody>

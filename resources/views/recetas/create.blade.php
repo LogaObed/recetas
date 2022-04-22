@@ -3,7 +3,7 @@
     <a href="{{ route('recetas.index') }}" class="btn btn-primary mr-2 text-white">Mis Receta</a>
 @endsection
 @section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css" integrity="sha512-5m1IeUDKtuFGvfgz32VVD0Jd/ySGX7xdLxhqemTmThxHdgqlgPdupWoSN8ThtUSLpAGBvA8DY2oO7jJCrGdxoA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.0/trix.css" integrity="sha512-EQF8N0EBjfC+2N2mlaH4tNWoUXqun/APQIuFmT1B+ThTttH9V1bA0Ors2/UyeQ55/7MK5ZaVviDabKbjcsnzYg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection
 @section('content')
     <h2 class="text-center mb-2">Crear Nueva Receta</h2>
@@ -31,11 +31,11 @@
                         placeholder="Categoria receta"> --}}
                     <select name="categoria" id="categoria" class="form-control @error('categoria') is-invalid @enderror">
                         <option value="">Seleccionar Categoria</option>
-                        @foreach ($categorias as $id => $categoria)
+                        @foreach ($categorias as $categoria)
                             {{-- El campo old('categoria') == $id ? 'selected':'' contiene un if en ? y el : es else --}}
 
-                            <option value="{{ $id }}" {{ old('categoria') == $id ? 'selected' : '' }}>
-                                {{ $categoria }}</option>
+                            <option value="{{ $categoria->id }}" {{ old('categoria') == $categoria->id ? 'selected' : '' }}>
+                                {{ $categoria->nombre }}</option>
                         @endforeach
                     </select>
                     @error('categoria')
@@ -96,5 +96,5 @@
     </div>
 @endsection
 @section('scripts')
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js" integrity="sha512-2RLMQRNr+D47nbLnsbEqtEmgKy67OSCpWJjJM394czt99xj3jJJJBQ43K7lJpfYAYtvekeyzqfZTx2mqoDh7vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.0/trix.js" integrity="sha512-S9EzTi2CZYAFbOUZVkVVqzeVpq+wG+JBFzG0YlfWAR7O8d+3nC+TTJr1KD3h4uh9aLbfKIJzIyTWZp5N/61k1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   
 @endsection
