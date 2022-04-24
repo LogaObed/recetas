@@ -13,11 +13,11 @@ class Receta extends Model
     public function categoria()
     {
         // obtiem informacion por llave foranea FK belongsTo(una receta puede pertenecer a difentes categorias)
-        return $this->belongsTo(CategoriaReceta::class);
+        return $this->belongsTo(CategoriaReceta::class,'categoria_id');
     }
     public function autor()
     {
         // obtiem informacion por llave foranea FK belongsTo(una receta puede pertenecer a difentes categorias)
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 }

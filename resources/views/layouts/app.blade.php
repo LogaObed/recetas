@@ -8,9 +8,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+  <!-- Scripts -->
+       {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+       <script src="{{ asset('js/app.js') }}" defer></script>
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css" integrity="sha512-CWdvnJD7uGtuypLLe5rLU3eUAkbzBR3Bm1SFPEaRfvXXI2v2H5Y0057EMTzNuGGRIznt8+128QIDQ8RqmHbAdg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection
@@ -51,9 +51,25 @@
                                 </li>
                             @endif
                         @else
+                         {{-- nuevo menu --}}
+                         <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                               Acciones <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('recetas.index') }}">
+                                    {{ 'Inicio' }}
+                                </a>
+                                <a class="dropdown-item" href="{{ route('recetas.create') }}">
+                                    {{ 'Crear Receta' }}
+                                </a>
+                            </div>
+                        </li>
+                        {{-- menu viejo --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->name }} {{ Auth::user()->apellidop }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -68,6 +84,7 @@
                                     </form>
                                 </div>
                             </li>
+                           
                         @endguest
                     </ul>
                 </div>
@@ -85,6 +102,7 @@
         </div>
         
     </div>
+     
     @yield('scripts')
 </body>
 </html>

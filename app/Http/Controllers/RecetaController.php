@@ -14,8 +14,8 @@ class RecetaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        
+        // abrir la visualziacion al apartado show ['except'=>['show','create']])
+        $this->middleware('auth', ['except' => 'show']);
     }
     /**
      * Display a listing of the resource.
@@ -24,11 +24,11 @@ class RecetaController extends Controller
      */
     public function index()
     {
-        
+
         // Se peudde utilizar la configuracion auth()-> 0 Auth::;
         // Auth::user()->recetas->dd();
-        $recetas=auth()->user()->recetas;
-        return view('recetas.index')->with('recetas',$recetas);
+        $recetas = auth()->user()->recetas;
+        return view('recetas.index')->with('recetas', $recetas);
     }
 
     /**
@@ -38,13 +38,13 @@ class RecetaController extends Controller
      */
     public function create()
     {
-    //     Se Ocupa el motodo get para seleccionar, pluck para solicitar los campos especificos y add solo imprime el areglo
-    //    DB::table('categoria_recetas')->get()->pluck('nombre','id')->dd();
-    //     $categorias = DB::table('categoria_recetas')->get()->pluck('nombre','id');
+        //     Se Ocupa el motodo get para seleccionar, pluck para solicitar los campos especificos y add solo imprime el areglo
+        //    DB::table('categoria_recetas')->get()->pluck('nombre','id')->dd();
+        //     $categorias = DB::table('categoria_recetas')->get()->pluck('nombre','id');
         // // obtener categoria con modelo
-        $categorias = CategoriaReceta::all(['id','nombre']);
+        $categorias = CategoriaReceta::all(['id', 'nombre']);
         // with ayuda a compartir los datos como variable
-        return view('recetas.create')->with('categorias',$categorias);
+        return view('recetas.create')->with('categorias', $categorias);
     }
 
     /**
@@ -56,28 +56,28 @@ class RecetaController extends Controller
     public function store(Request $request)
     {
         // store se validan os formularios e inserta
-        $data=request()->validate([
-            'titulo'=>'required',
-            'categoria'=>'required',
+        $data = request()->validate([
+            'titulo' => 'required',
+            'categoria' => 'required',
             // 'ingredientes'=>'required|min:40|max:255',
-            'ingredientes'=>'required',
-            'preparacion'=>'required',
-            'imagen'=>'required|image',
+            'ingredientes' => 'required',
+            'preparacion' => 'required',
+            'imagen' => 'required|image',
         ]);
         // Toma el dato imagen del form $request['imagen']->store('upload-recetas','public') y la guarda
         //  $request['imagen']->store('nombre_carpeta','public') la imgan es guardada en storage/app/publuc y se puede ocupar como ruta ala base de datos
-        $ruta_img = $request['imagen']->store('upload-recetas','public');
+        $ruta_img = $request['imagen']->store('upload-recetas', 'public');
         // redimencionar la imagen se debe instalar intervention image
-        $img = Image::make(public_path("storage/{$ruta_img}"))->fit(1000,550);
+        $img = Image::make(public_path("storage/{$ruta_img}"))->fit(1000, 550);
         $img->save();
         // insertar a la base de datos con modelo
         // auth()->user()-> recetas() ya obtiene los datos de la base de datos como el id de usuario 
         auth()->user()->recetas()->create([
-                'titulo'=>$data['titulo'],
-                'categoria_id'=>$data['categoria'],
-                'imagen'=>$ruta_img,
-                'ingredientes'=>$data['ingredientes'],
-                'preparacion'=>$data['preparacion'],
+            'titulo' => $data['titulo'],
+            'categoria_id' => $data['categoria'],
+            'imagen' => $ruta_img,
+            'ingredientes' => $data['ingredientes'],
+            'preparacion' => $data['preparacion'],
         ]);
         return redirect()->action('RecetaController@index');
         // dd($request->all());
@@ -92,7 +92,7 @@ class RecetaController extends Controller
     public function show(Receta $receta)
     {
         //muestra los datos de una consulta por get forma abreviada de pasar datos 
-      return view('recetas.show',compact('receta'));
+        return view('recetas.show', compact('receta'));
     }
 
     /**
@@ -103,7 +103,9 @@ class RecetaController extends Controller
      */
     public function edit(Receta $receta)
     {
-        //
+        $categorias = CategoriaReceta::all(['id', 'nombre']);
+        //informaicon de la reseta
+        return view('recetas.edit', compact('receta', 'categorias'));
     }
 
     /**
@@ -115,7 +117,37 @@ class RecetaController extends Controller
      */
     public function update(Request $request, Receta $receta)
     {
-        //
+        // autenticacion de usuario que desea actualziar
+        $this -> authorize('update',$receta);
+        // store se validan os formularios e inserta
+        $data = request()->validate([
+            'titulo' => 'required',
+            'categoria' => 'required',
+            // 'ingredientes'=>'required|min:40|max:255',
+            'ingredientes' => 'required',
+            'preparacion' => 'required',
+        ]);
+
+        // sobre escribir datos para actulizacion
+        $receta->titulo = $data['titulo'];
+        $receta->categoria_id = $data['categoria'];
+        $receta->ingredientes = $data['ingredientes'];
+        $receta->preparacion = $data['preparacion'];
+        // $receta->titulo = $data['titulo'];
+        // modificar imagen
+        if(request('imagen')){
+            //eliminar imagen anterior
+            unlink(public_path("storage/{$receta->imagen}"));
+            //obtiendo una neuva ruta para la imagen y su alojamiento
+            $ruta_img = $request['imagen']->store('upload-recetas', 'public');
+            // redimencionar la imagen se debe instalar intervention image
+            $img = Image::make(public_path("storage/{$ruta_img}"))->fit(1000, 550);
+            $img->save();
+            $receta->imagen = $ruta_img;
+        }
+        $receta->save();
+        return redirect()->route('recetas.show',$receta->id);
+
     }
 
     /**

@@ -12,7 +12,7 @@
             </p>
             <p>
                 <span class="font-weight-bold text-primary">Autor:</span>
-                {{$receta->autor}}
+                {{$receta->autor->name}} {{$receta->autor->apellidop}} {{$receta->autor->apellidom}} 
             </p>
             <p>
                 <span class="font-weight-bold text-primary">Fecha De Creción:</span>
@@ -20,13 +20,13 @@
                 <fecha-receta hola="{{$receta->created_at}}"></fecha-receta>
             </p>
         </div>
-        <div  class="ingredientes">
+        <div  class="ingredientes text-justify">
         <h2 class="my-3 text-primary">Ingredientes:</h2>
         {{-- imprimir los ingredientes con codigo html --}}
         
         {!!$receta->ingredientes!!}
     </div>
-    <div class="preparacion">
+    <div class="preparacion text-justify">
         <h2 class="my-3 text-primary">Preparación:</h2>
         {!!$receta->preparacion!!}
         </div>
