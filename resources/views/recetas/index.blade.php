@@ -21,14 +21,13 @@
                             {{-- concatenacion de péticiones por medio del modelo relacional modelo --}}
                             <td>{{ $receta->categoria->nombre }}</td>
                             <td>
-                                <center>
-                                    <a style="margin-top:1%;" href="" class="btn btn-danger">Eliminar</a>
-                                    <a style="margin-top:1%;" href="{{ route('recetas.edit', $receta->id) }}"
-                                        class="btn btn-dark">Editar</a>
-                                    {{-- formato para utilzir show es ('ruta_declarada',id) --}}
-                                    <a style="margin-top:1%;" href="{{ route('recetas.show', $receta->id) }}"
-                                        class="btn btn-success">Ver</a>
-                                </center>
+                                <eliminar-receta eliminar-id="{{$receta->id}}">
+                                </eliminar-receta>
+                                      <a  href="{{ route('recetas.edit', $receta->id) }}"
+                                          class="btn btn-dark d-block mb-1">Editar</a>
+                                      {{-- formato para utilzir show es ('ruta_declarada',id) --}}
+                                      <a  href="{{ route('recetas.show', $receta->id) }}"
+                                          class="btn btn-success d-block mb-1">Ver</a>
                             </td>
                         </tr>
                     @endforeach

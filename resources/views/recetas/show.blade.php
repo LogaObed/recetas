@@ -19,6 +19,11 @@
                 {{-- usando moment --}}
                 <fecha-receta hola="{{$receta->created_at}}"></fecha-receta>
             </p>
+            <p>
+                <span class="font-weight-bold text-primary">Fecha De Actualizacion:</span>
+                {{-- usando moment --}}
+                <fecha-receta hola="{{$receta->updated_at}}"></fecha-receta>
+            </p>
         </div>
         <div  class="ingredientes text-justify">
         <h2 class="my-3 text-primary">Ingredientes:</h2>

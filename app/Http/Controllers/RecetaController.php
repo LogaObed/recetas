@@ -159,5 +159,9 @@ class RecetaController extends Controller
     public function destroy(Receta $receta)
     {
         //
+        unlink(public_path("storage/{$receta->imagen}"));
+        $this->authorize('delete',$receta);
+        $receta->delete();
+        return redirect()->route('recetas.index');
     }
 }
