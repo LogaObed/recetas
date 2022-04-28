@@ -66,6 +66,21 @@
                                 </a>
                             </div>
                         </li>
+                        {{-- Perdiles --}}
+                         <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                               Perfiles <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('perfiles.show', Auth::user()->id) }}">
+                                    {{ 'Ver Perfil' }}
+                                </a>
+                                {{-- <a class="dropdown-item" href="{{ route('recetas.create') }}">
+                                    {{ 'Crear Receta' }}
+                                </a> --}}
+                            </div>
+                        </li>
                         {{-- menu viejo --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

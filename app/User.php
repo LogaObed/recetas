@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','apellidop','apellidom'
+        'name', 'email', 'password', 'apellidop', 'apellidom'
     ];
 
     /**
@@ -36,9 +36,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    // evento que se ejecuta al crear un usuario
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($user){
+            $user->perfil()->create();
+        });
+    }
     // relacion de usuarios a recetas de uno a mucho para ser usado en la consulta de sus recetas
-    public function recetas(){
-     return $this->hasMany(Receta::class);
-    } 
-   
+    public function recetas()
+    {
+        return $this->hasMany(Receta::class);
+    }
+    // refetencia de uno a uno  de usuario y perfil con has hone
+    public function perfil()
+    {
+        return $this->hasOne(Perfil::class);
+    }
 }
