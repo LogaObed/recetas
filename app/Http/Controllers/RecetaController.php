@@ -103,6 +103,7 @@ class RecetaController extends Controller
      */
     public function edit(Receta $receta)
     {
+        $this -> authorize('update',$receta);
         $categorias = CategoriaReceta::all(['id', 'nombre']);
         //informaicon de la reseta
         return view('recetas.edit', compact('receta', 'categorias'));
@@ -130,9 +131,9 @@ class RecetaController extends Controller
 
         // sobre escribir datos para actulizacion
         $receta->titulo = $data['titulo'];
-        $receta->categoria_id = $data['categoria'];
         $receta->ingredientes = $data['ingredientes'];
         $receta->preparacion = $data['preparacion'];
+        $receta->categoria_id = $data['categoria'];
         // $receta->titulo = $data['titulo'];
         // modificar imagen
         if(request('imagen')){

@@ -49,10 +49,10 @@
                 <div class="form-group">
                     <label for="preparacion">Preparación</label>
                     {{-- <input type="text" value="{{ old('preparacion') }}"
-                        class="form-control @error('preparacion') is-invalid @enderror" name="preparacion" id="preparacion"
+                         name="preparacion" id="preparacion"
                         placeholder="preparacion receta"> --}}
                         <input type="hidden" name="preparacion" id="preparacion" value="{{$receta->preparacion}}" {{ old('preparacion') }}>
-                        <trix-editor input="preparacion" ></trix-editor>
+                        <trix-editor input="preparacion" class="h-auto form-control @error('preparacion') is-invalid @enderror"></trix-editor>
                     @error('preparacion')
                         <span class="invalid-feedback d-block" role="alert">
                             <strong>{{ $message }}</strong>
@@ -63,10 +63,10 @@
                 <div class="form-group">
                     <label for="ingredientes">Ingredientes</label>
                     {{-- <input type="text" value="{{ old('ingredientes') }}"
-                        class="form-control @error('ingredientes') is-invalid @enderror" name="ingredientes"
+                         name="ingredientes"
                         id="ingredientes" placeholder="ingredientes receta"> --}}
                         <input type="hidden" name="ingredientes" id="ingredientes" value="{{$receta->ingredientes}}" {{ old('ingredientes') }}>
-                        <trix-editor input="ingredientes" ></trix-editor>
+                        <trix-editor input="ingredientes" class="h-auto form-control @error('ingredientes') is-invalid @enderror"></trix-editor>
                     @error('ingredientes')
                         <span class="invalid-feedback d-block" role="alert">
                             <strong>{{ $message }}</strong>

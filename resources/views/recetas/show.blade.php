@@ -12,7 +12,7 @@
             </p>
             <p>
                 <span class="font-weight-bold text-primary">Autor:</span>
-                {{$receta->autor->name}} {{$receta->autor->apellidop}} {{$receta->autor->apellidom}} 
+                <a href="{{route('perfiles.show',$receta->user_id)}}" >{{$receta->autor->name}} {{$receta->autor->apellidop}} {{$receta->autor->apellidom}}</a>
             </p>
             <p>
                 <span class="font-weight-bold text-primary">Fecha De Creción:</span>

@@ -27,7 +27,7 @@
                                           class="btn btn-dark d-block mb-1">Editar</a>
                                       {{-- formato para utilzir show es ('ruta_declarada',id) --}}
                                       <a  href="{{ route('recetas.show', $receta->id) }}"
-                                          class="btn btn-success d-block mb-1">Ver</a>
+                                          class="btn btn-success d-block mb-1" target="_blank">Ver</a>
                             </td>
                         </tr>
                     @endforeach

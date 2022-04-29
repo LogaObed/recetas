@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PerfilController extends Controller
 {
+    public function __construct()
+    {
+         // abrir la visualziacion al apartado show ['except'=>['show','create']])
+         $this->middleware('auth', ['except' => 'show']);
+    }
     /**
      * Display the specified resource.
      *
@@ -28,6 +33,8 @@ class PerfilController extends Controller
     public function edit(Perfil $perfil)
     {
         //
+        $this -> authorize('update',$perfil);
+        return view('perfiles.edit',compact('perfil'));
     }
 
     /**
@@ -39,7 +46,15 @@ class PerfilController extends Controller
      */
     public function update(Request $request, Perfil $perfil)
     {
-        //
+        // return $request;
+        $this -> authorize('update',$perfil);
+          $data = request()->validate([
+            'nombre' => 'required',
+            'apellidop' => 'required',
+            'biografia' => 'required',
+            // 'ingredientes'=>'required|min:40|max:255',
+            'apellidom' => 'required',
+        ]);
     }
 
     /**

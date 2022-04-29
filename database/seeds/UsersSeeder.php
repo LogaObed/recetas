@@ -21,12 +21,13 @@ class UsersSeeder extends Seeder
             'email' => 'obed@gmail.com',
             'password' => Hash::make('12345678'),
         ]);
-        $usuario2 = User::create([
+        $usuario = User::create([
             'name' => 'Eben',
             'apellidop' => 'Loeza',
             'apellidom' => 'Garduño',
             'email' => 'eben@gmail.com',
             'password' => Hash::make('12345678'),
         ]);
+      
     }
 }

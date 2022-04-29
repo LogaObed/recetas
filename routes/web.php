@@ -24,6 +24,10 @@ Route::get('/recetas/{receta}','RecetaController@show')->name('recetas.show');
 Route::get('/recetas/{receta}/edit','RecetaController@edit')->name('recetas.edit');
 Route::put('/recetas/{receta}','RecetaController@update')->name('recetas.update');
 Route::delete('/recetas/{receta}','RecetaController@destroy')->name('recetas.destroy');
+// datos para el perfil 
 Route::get('/perfiles/{perfil}','PerfilController@show')->name('perfiles.show');
+Route::get('/perfiles/{perfil}/edit','PerfilController@edit')->name('perfiles.edit');
+Route::put('/perfiles/{perfil}','PerfilController@update')->name('perfiles.update');
+
 Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
