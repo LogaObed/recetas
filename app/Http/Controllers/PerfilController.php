@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Perfil;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 
 class PerfilController extends Controller
 {
@@ -46,7 +48,7 @@ class PerfilController extends Controller
      */
     public function update(Request $request, Perfil $perfil)
     {
-        // return $request;
+      
         $this -> authorize('update',$perfil);
           $data = request()->validate([
             'nombre' => 'required',
@@ -55,6 +57,25 @@ class PerfilController extends Controller
             // 'ingredientes'=>'required|min:40|max:255',
             'apellidom' => 'required',
         ]);
+        // editar infomacion en campo bd del usuario
+        auth()->user()->name = $data['nombre'];
+        auth()->user()->apellidop = $data['apellidop'];
+        auth()->user()->apellidom = $data['apellidom'];
+        auth()->user()->save();
+        //editar al perfil
+        if(request('imagen')){
+            //eliminar imagen anterior
+            unlink(public_path("storage/{$perfil->imagen}"));
+            //obtiendo una neuva ruta para la imagen y su alojamiento
+            $ruta_img = $request['imagen']->store('upload-perfiles', 'public');
+            // redimencionar la imagen se debe instalar intervention image
+            $img = Image::make(public_path("storage/{$ruta_img}"))->fit(600, 600);
+            $img->save();
+            $perfil->imagen = $ruta_img;
+        }
+        $perfil->biografia = $data['biografia'];
+        $perfil->save();
+        return view('perfiles.show',compact('perfil'));
     }
 
     /**

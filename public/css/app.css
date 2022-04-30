@@ -10968,7 +10968,6 @@ body {
 
 trix-editor {
   min-height: 300px;
-  max-height: auto;
 }
 
 .bg-primary .navbar-brand {
@@ -10989,5 +10988,9 @@ trix-editor {
 
 .bg-primary .navbar-nav:hover {
   color: white;
+}
+
+.icono {
+  width: 25px;
 }
 

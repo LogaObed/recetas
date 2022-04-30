@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('botones')
-    <a href="{{ route('recetas.index') }}" class="btn btn-primary mr-2 text-white">Mis Receta</a>
+@include('btn.btnvolver')
 @endsection
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.0/trix.css"
@@ -13,8 +13,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 col-sm-8">
-                <form action="{{ route('perfiles.update', ['perfil' => $perfil->id]) }}" method="post"
-                    enctype="multipart/form-data" novalidate>
+                <form action="{{ route('perfiles.update', ['perfil' => $perfil->id]) }}" method="post" enctype="multipart/form-data" novalidate>
                     {{-- csrf es el token del formulario --}}
                     @csrf
                     @method('put')
@@ -65,12 +64,13 @@
 
                     <div class="form-group">
                         <label for="imagen">Imagen</label>
-                        <input type="file" class="@error('imagen') is-invalid @enderror form-control" id="imagen"
-                            class="imagen">
+                        <input type="file" class="@error('imagen') is-invalid @enderror form-control" name="imagen" id="imagen">
                         @if ($perfil->imagen)
                             <div class="mt-4">
                                 <p>Imagen Actual</p>
-                                <img src="/storage/{{ $perfil->imagen }}" alt="" style="width: 100%">
+                                <center>
+                                    <img src="/storage/{{ $perfil->imagen }}" class="w-25 h-auto rounded-circle" alt="">
+                                </center>
                             </div>
                         @endif
                         @error('imagen')

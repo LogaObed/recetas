@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('botones')
-    <a href="{{ route('recetas.create') }}" class="btn btn-primary mr-2 text-white">Crear Receta</a>
+   @include('btn.btnindex')
 @endsection
 @section('content')
     <h2 class="text-center mb-2">Recetas Laravel</h2>
@@ -22,6 +22,7 @@
                             <td>{{ $receta->categoria->nombre }}</td>
                             <td>
                                 <eliminar-receta eliminar-id="{{$receta->id}}">
+                                   
                                 </eliminar-receta>
                                       <a  href="{{ route('recetas.edit', $receta->id) }}"
                                           class="btn btn-dark d-block mb-1">Editar</a>
